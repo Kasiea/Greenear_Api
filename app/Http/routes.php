@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/bms','BMSInfoController@index');
+Route::get('/bms/{id}','BMSInfoController@query');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
