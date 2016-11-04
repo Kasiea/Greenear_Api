@@ -18,9 +18,12 @@ Route::get('/', function () {
 Route::get('/bms','BMSInfoController@index');
 Route::get('/bms/{id}','BMSInfoController@query');
 Route::get('/bms1/{id}','BMSInfoController@query_bms');
+Route::get('/bmsgps/{id}','BMSInfoController@query_gps');
+Route::get('/bmsworkinfo/{id}','BMSInfoController@query_bms_work');
 
 Route::get('/bat','BatDataController@index');
 Route::get('/bat/{id}','BatDataController@query_bat_vol');
+Route::get('/batworkinfo/{id}','BatDataController@query_bat_work');
 
 /*
 |--------------------------------------------------------------------------

@@ -34,10 +34,10 @@ class BMSInfoController extends ApiController
             ]);
     }
 
-    //特殊查找
+    //特殊查找特定bms的所有数据
     public function query_bms($bms_id)
     {
-        $bms_info = BMSInfo::where('bms_id',$bms_id)->first();
+        $bms_info = BMSInfo::where('bms_id',$bms_id)->get();
         if(!$bms_info){
             return $this->responseNotFound();
         }
@@ -45,5 +45,35 @@ class BMSInfoController extends ApiController
             'status'=>'success',
             'data'=>$bms_info
         ]);
+    }
+
+    //只查询BMS工作状态相关数据
+    public function query_bms_work($bms_id)
+    {
+        $bms_info = BMSInfo::where('bms_id',$bms_id)->select('soc','soh','vol',
+            'res','env_temp','curr','dc_status')->get();
+        if(!$bms_info){
+            return $this->responseNotFound();
+        }
+        return $this->response([
+            'status'=>'success',
+            'data'=>$bms_info
+        ]);
+
+    }
+
+    //只查询GPS相关数据，且查询最新信息
+    public function query_gps($bms_id)
+    {
+        $bms_info = BMSInfo::where('bms_id',$bms_id)->select('longitude','latitude')->orderBy('created_at',
+            'desc')->first();
+        if(!$bms_info){
+            return $this->responseNotFound();
+        }
+        return $this->response([
+            'status'=>'success',
+            'data'=>$bms_info
+        ]);
+
     }
 }

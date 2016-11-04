@@ -19,15 +19,29 @@ class BatDataController extends ApiController
         ]);
     }
 
-    public function query_bat_vol($id)
+    public function query_bat($id)
     {
-        $bat_data = BatData::find($id);
+        $bat_data = BatData::find($id)->where('bms_id',1)->first();
         if(!$bat_data){
             return $this->responseNotFound();
         }
         return $this->response([
             'status'=>'success',
-            'data'=>$bat_data->vol
+            'data'=>$bat_data
+        ]);
+
+    }
+
+    public function query_bat_work($bms_id)
+    {
+        $bat_data = BatData::find($bms_id)->where('bat_id',1)->select('soc',
+            'soh','res','vol')->first();
+        if(!$bat_data){
+            return $this->responseNotFound();
+        }
+        return $this->response([
+            'status'=>'success',
+            'data'=>$bat_data
         ]);
     }
 }
